@@ -11,8 +11,11 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 url = "https://docs.google.com/spreadsheets/d/1UqgZb1MJCsfr9300dnphCGBvPlWxxMyNNnt4nppqdKY"
 
 # Fetch existing vendors data
-updated = conn.read(spreadsheet = url, worksheet="Updates") # Updates
-buecher = conn.read(spreadsheet = url, worksheet="Bücher") # Bücher
+updated = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
+buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5))) # Bücher
+updated = updated.dropna(how="all")
+buecher = buecher.dropna(how="all")
+
 
 st.markdown("### Neues Buch")
 
