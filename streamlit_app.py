@@ -26,6 +26,7 @@ seite = st.number_input(label="Seite",
 if st.button('Neuer Eintrag'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
+    st.message(buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1)
     bedingung = (updates['Datum'] == datum) & (updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1)
 
     if bedingung.any():
