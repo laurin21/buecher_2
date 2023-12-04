@@ -58,7 +58,7 @@ st.write(neues_df)
 neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
 st.write(neues_df)
 neues_df = pd.merge(neues_df, df_days, on='Datum', how='left')
-neues_df['Seiten'] = neues_df['Seiten'].fillna(0)
+neues_df['Seiten'] = neues_df['Gelesen'].fillna(0)
 
 df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
 
