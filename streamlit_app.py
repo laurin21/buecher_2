@@ -11,7 +11,27 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 url = "https://docs.google.com/spreadsheets/d/1UqgZb1MJCsfr9300dnphCGBvPlWxxMyNNnt4nppqdKY"
 
 # Fetch existing vendors data
-existing_data = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(6)), ttl=5)
-existing_data = existing_data.dropna(how="all")
+updated = conn.read(spreadsheet = url, worksheet="Updates") # Updates
+buecher = conn.read(spreadsheet = url, worksheet="Bücher") # Bücher
 
-st.dataframe(existing_data)
+st.markdown("### Neues Buch")
+
+titel = st.text_input(label="Buchtitel")
+autor = st.text_input(label="Autor")
+seiten = st.number_input(label="Seiten")
+
+if st.button('Enter neues Buch'):
+    if not titel or not autor or not seiten:
+                st.warning("Ensure all mandatory fields are filled.")
+    new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()],
+                            "Titel": [titel], 
+                             "Autor": [autor], 
+                             "Seiten": [seiten],
+                             "Fortschritt": [0]})
+    new_buecher = pd.concat([buecher, new_data], ignore_index=True)
+    conn.update(worksheet="Bücher", data=new_buecher)
+    st.success("Buch wurde erfolgreich hinzugefügt")
+
+
+st.table(updated)
+st.table(buecher)
