@@ -11,9 +11,9 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 url = "https://docs.google.com/spreadsheets/d/1UqgZb1MJCsfr9300dnphCGBvPlWxxMyNNnt4nppqdKY"
 
 # Fetch existing vendors data
-updated = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
+updates = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
 buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5))) # Bücher
-updated = updated.dropna(how="all")
+updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
 
@@ -35,6 +35,15 @@ if st.button('Enter neues Buch'):
     conn.update(worksheet="Bücher", data=new_buecher)
     st.success("Buch wurde erfolgreich hinzugefügt")
 
+option = st.multiselect(
+    'Welche Tabellen sollen angezeigt werden?',
+    ['Upadtes', 'Bücher'])
 
-st.table(updated)
-st.table(buecher)
+for i in option:
+    if i == "Updates":
+        st.markdown("##### Updates")
+        st.dataframe(updates)
+
+    if i == "Bücher":
+        st.markdown("##### Bücher")
+        st.dataframe(buecher)
