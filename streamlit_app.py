@@ -54,6 +54,7 @@ df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
 aktuelles_datum = pd.Timestamp.now().date()
 alle_tage = pd.date_range(start=min(df_days['Datum']), end=aktuelles_datum, freq='D')
 neues_df = pd.DataFrame({'Datum': alle_tage})
+st.write(neues_df)
 neues_df = pd.merge(neues_df, df_days, on='Datum', how='left')
 neues_df['Seiten'] = neues_df['Seiten'].fillna(0)
 
