@@ -30,19 +30,12 @@ if st.button('Neuer Eintrag'):
         st.warning("Ensure all mandatory fields are filled.")
 
     else:
-        st.info(buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1)
-        bedingung = (updates['Datum'] == datum) & (updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1)
-
-        if bedingung.any():
-            updates.loc[updates['Datum'] == datum, 'Gelesen'] = updates.loc[updates['Datum'] == datum, 'Gelesen'] + seite
-
-        else:
-            new_data = pd.DataFrame({"Datum": [datum],
-                                    "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
-                                    "Gelesen": [seite]})
-            new_updates = pd.concat([updates, new_data], ignore_index=True)
-            conn.update(worksheet="Updates", data=new_updates)
-            updates = new_updates
+        new_data = pd.DataFrame({"Datum": [datum],
+                                 "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
+                                 "Gelesen": [seite]})
+        new_updates = pd.concat([updates, new_data], ignore_index=True)
+        conn.update(worksheet="Updates", data=new_updates)
+        updates = new_updates
 
 st.line_chart(data = updates[["Datum", "Gelesen"]], x = "Datum", y = "Gelesen")
 
