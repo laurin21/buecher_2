@@ -33,7 +33,7 @@ if st.button('Neuer Eintrag'):
 
         if bedingung.any():
             updates.loc[updates['Datum'] == datum, 'Gelesen'] = updates.loc[updates['Datum'] == datum, 'Gelesen'] + seite
-        
+
         else:
             new_data = pd.DataFrame({"Datum": [datum],
                                     "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
@@ -42,6 +42,9 @@ if st.button('Neuer Eintrag'):
             conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
             st.success("Buch wurde erfolgreich hinzugefügt")
+
+st.line_chart(data = updates, x = "Datum", y = "Gelesen")
+
 
 st.markdown("")
 st.markdown("---")
