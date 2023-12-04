@@ -52,8 +52,9 @@ st.markdown("---")
 st.markdown("")
 
 st.markdown("##### Aktuelles Buch")
-buch_titel = st.selectbox(label=None,
-                     options=buecher["Titel"])
+buch_titel = st.selectbox(label="Buchtitel",
+                     options=buecher["Titel"],
+                     label_visibility = "collapsed")
 
 st.markdown("")
 
