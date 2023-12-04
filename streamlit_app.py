@@ -47,8 +47,12 @@ if seiten_gestern == 0:
 
 st.metric(label = "Heute gelesen", value = f"{int(seiten_heute)}", delta = f"{int(seiten_delta*100)}%")
 
-st.markdown("#### Aktuelles Buch")
-buch_titel = st.selectbox(label="Buch",
+st.markdown("")
+st.markdown("---")
+st.markdown("")
+
+st.markdown("##### Aktuelles Buch")
+buch_titel = st.selectbox(label=None,
                      options=buecher["Titel"])
 
 st.markdown("")
