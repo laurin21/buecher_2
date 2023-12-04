@@ -45,7 +45,7 @@ buecher["Gelesen"] = df_buch["Gelesen"]
 
 buecher["Fortschritt"] = buecher["Start"] + buecher["Gelesen"]
 buecher["Übrig"] = buecher["Seiten"] - buecher["Gelesen"]
-buecher["Prozent"] = buecher["Gelesen"] / buecher["Seiten"]
+buecher["Prozent"] = (buecher["Fortschritt"] / buecher["Seiten"]) * 100
 
 
 
