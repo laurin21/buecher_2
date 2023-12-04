@@ -17,12 +17,12 @@ updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
 st.markdown("## Neuer Eintrag")
-titel = st.selectbox(label="Buchtitel",
+buch_titel = st.selectbox(label="Buchtitel",
                      options=buecher["Titel"])
 datum = st.text_input(label="Autor")
 seite = st.number_input(label="Seiten")
 if st.button('Enter neues Buch'):
-    if not titel or not datum or not seite:
+    if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
     new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()+1],
                             "Titel": [titel], 
