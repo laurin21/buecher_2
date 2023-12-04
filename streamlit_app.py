@@ -83,13 +83,12 @@ df_days_buch['Gelesen'] = df_days_buch['Gelesen'].fillna(0)
 gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
 
 with gesamt_tab:
-    st.markdown("##### Gesamte Historie")
     st.line_chart(data = df_days[["Datum", "Gelesen"]], 
               x = "Datum", 
               y = "Gelesen")
 with buch_tab:
 
-    st.markdown("##### Ausgewähltes Buch")
+    st.markdown(f"##### {buch_titel}")
     st.line_chart(data = df_days_buch[["Datum", "Gelesen"]], 
               x = "Datum", 
               y = "Gelesen")
