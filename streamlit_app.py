@@ -51,14 +51,12 @@ st.markdown("")
 
 
 df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
-aktuelles_datum = pd.Timestamp.now().date()
-alle_tage = pd.date_range(start=min(df_days['Datum']), end=aktuelles_datum, freq='D')
+heute = pd.Timestamp.now().date()
+alle_tage = pd.date_range(start=min(df_days['Datum']), end=heute, freq='D')
 neues_df = pd.DataFrame({'Datum': alle_tage})
-st.write(neues_df)
 neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
-st.write(neues_df)
-neues_df = pd.merge(neues_df, df_days, on='Datum', how='left')
-neues_df['Seiten'] = neues_df['Gelesen'].fillna(0)
+df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
+df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
 
 df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
 
