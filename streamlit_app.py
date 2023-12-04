@@ -51,7 +51,7 @@ st.markdown("")
 
 
 df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
-df_days_buch = df_days.loc[df_days['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy()
+df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
 
 gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
 
