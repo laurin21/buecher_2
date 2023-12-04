@@ -27,7 +27,7 @@ if st.button('Neuer Eintrag'):
     new_data = pd.DataFrame({"Datum": [datum],
                             "Titel": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]], 
                             "Gelesen": [seite]})
-    new_updates = pd.concat([buecher, new_data], ignore_index=True)
+    new_updates = pd.concat([updates, new_data], ignore_index=True)
     conn.update(worksheet="Updates", data=new_updates)
     updates = new_updates
     st.success("Buch wurde erfolgreich hinzugefügt")
