@@ -16,19 +16,23 @@ buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
-
-option = st.selectbox(
-     label = "Was soll angezeigt werden?",
-     options = ('Updates', 'Bücher'))
-
-for i in option:
-    if i == "Updates":
-        st.markdown("##### Updates")
-        st.dataframe(updates)
-
-    if i == "Bücher":
-        st.markdown("##### Bücher")
-        st.dataframe(buecher)
+st.markdown("## Neuer Eintrag")
+titel = st.selectbox(label="Buchtitel",
+                     options=buecher["Titel"])
+datum = st.text_input(label="Autor")
+seite = st.number_input(label="Seiten")
+if st.button('Enter neues Buch'):
+    if not titel or not datum or not seite:
+        st.warning("Ensure all mandatory fields are filled.")
+    new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()+1],
+                            "Titel": [titel], 
+                            "Autor": [autor], 
+                            "Seiten": [seiten],
+                            "Fortschritt": [start]})
+    new_buecher = pd.concat([buecher, new_data], ignore_index=True)
+    conn.update(worksheet="Bücher", data=new_buecher)
+    buecher = new_buecher
+    st.success("Buch wurde erfolgreich hinzugefügt")
 
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
