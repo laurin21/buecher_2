@@ -15,7 +15,7 @@ updates = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3
 buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5))) # Bücher
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
-updates.set_index(["date"], inplace=True)
+updates.set_index(["Datum"], inplace=True)
               
 st.markdown("#### Neuer Eintrag")
 buch_titel = st.selectbox(label="Buch",
