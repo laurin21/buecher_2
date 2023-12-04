@@ -19,7 +19,7 @@ buecher = buecher.dropna(how="all")
 st.markdown("## Neuer Eintrag")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
-datum = st.text_input(label="Datum")
+datum = st.date_input(label="Datum")
 seite = st.number_input(label="Seite")
 if st.button('Neuer Eintrag'):
     if not buch_titel or not datum or not seite:
