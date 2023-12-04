@@ -22,6 +22,7 @@ st.markdown("### Neues Buch")
 titel = st.text_input(label="Buchtitel")
 autor = st.text_input(label="Autor")
 seiten = st.number_input(label="Seiten")
+start = st.number_input(label="Start bei")
 
 if st.button('Enter neues Buch'):
     if not titel or not autor or not seiten:
@@ -30,7 +31,7 @@ if st.button('Enter neues Buch'):
                             "Titel": [titel], 
                              "Autor": [autor], 
                              "Seiten": [seiten],
-                             "Fortschritt": [0]})
+                             "Fortschritt": [start]})
     new_buecher = pd.concat([buecher, new_data], ignore_index=True)
     conn.update(worksheet="Bücher", data=new_buecher)
     buecher = new_buecher
