@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # Display Title and Description
-st.title("Bücher Stats")
+st.markdown("## Bücher Stats")
 
 
 # Establishing a Google Sheets connection
@@ -19,9 +19,7 @@ buecher = buecher.dropna(how="all")
 updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%Y-%m-%d", errors = "coerce").dt.date 
 
 
-st.markdown("")
 st.markdown("---")
-st.markdown("")
 
 heute = pd.Timestamp.now().date()
 
@@ -47,9 +45,7 @@ if seiten_gestern == 0:
 
 st.metric(label = "Heute gelesen", value = f"{int(seiten_heute)}", delta = f"{int(seiten_delta*100)}%")
 
-st.markdown("")
 st.markdown("---")
-st.markdown("")
 
 st.markdown("##### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buchtitel",
