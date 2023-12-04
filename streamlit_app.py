@@ -101,9 +101,10 @@ with buch_tab:
     st.line_chart(data = df_days_buch[["Datum", "Gelesen"]], 
               x = "Datum", 
               y = "Gelesen")
-    st.metric(label = "Fortschritt", value = buecher.loc[buecher['Titel'] == buch_titel, 'Fortschritt'].values[0])
-    st.metric(label = "Prozent", value = buecher.loc[buecher['Titel'] == buch_titel, 'Prozent'].values[0])
-    st.metric(label = "Übrig", value = buecher.loc[buecher['Titel'] == buch_titel, 'Übrig'].values[0])
+    col1, col2, col3 = st.columns(3)
+    col1.metric(label = "Fortschritt", value = int(buecher.loc[buecher['Titel'] == buch_titel, 'Fortschritt'].values[0]))
+    col2.metric(label = "Prozent", value = f"{int(buecher.loc[buecher['Titel'] == buch_titel, 'Prozent'].values[0])}%")
+    col3.metric(label = "Übrig", value = int(buecher.loc[buecher['Titel'] == buch_titel, 'Übrig'].values[0]))
     
 
 
