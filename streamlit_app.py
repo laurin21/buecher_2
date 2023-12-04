@@ -116,11 +116,14 @@ st.markdown("")
 
 see_data = st.expander('Ganzer Datensatz')
 with see_data:
-    aus_tab, ein_tab = st.tabs(["Updates", "Bücher"])
+    updates_tab, buecher_tab, tage_tab = st.tabs(["Updates", "Bücher", "Tageswerte"])
 
-    with aus_tab:
+    with updates_tab:
         st.markdown("##### Updates")
         st.dataframe(data=updates.reset_index(drop=True))
-    with ein_tab:
+    with buecher_tab:
         st.markdown("##### Bücher")
         st.dataframe(data=buecher.reset_index(drop=True))
+    with tage_tab:
+        st.markdown("##### Bücher")
+        st.dataframe(data=df_days.reset_index(drop=True))
