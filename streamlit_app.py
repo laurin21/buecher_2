@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # Display Title and Description
-st.markdown("## Bücher Stats")
+st.title("Bücher Stats")
 
 
 # Establishing a Google Sheets connection
