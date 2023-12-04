@@ -16,7 +16,7 @@ buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
-st.markdown("## Neuer Eintrag")
+st.markdown("#### Neuer Eintrag")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 datum = st.date_input(label="Datum")
@@ -33,6 +33,10 @@ if st.button('Neuer Eintrag'):
     conn.update(worksheet="Updates", data=new_updates)
     updates = new_updates
     st.success("Buch wurde erfolgreich hinzugefügt")
+
+st.markdown("")
+st.markdown("---")
+st.markdown("")
 
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
