@@ -25,7 +25,7 @@ if st.button('Neuer Eintrag'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
     new_data = pd.DataFrame({"Datum": [datum],
-                            "Titel": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]], 
+                            "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
                             "Gelesen": [seite]})
     new_updates = pd.concat([updates, new_data], ignore_index=True)
     conn.update(worksheet="Updates", data=new_updates)
