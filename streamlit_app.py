@@ -17,10 +17,10 @@ updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
 st.markdown("## Neuer Eintrag")
-buch_titel = st.selectbox(label="Buchtitel",
+buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
-datum = st.text_input(label="Autor")
-seite = st.number_input(label="Seiten")
+datum = st.text_input(label="Datum")
+seite = st.number_input(label="Seite")
 if st.button('Enter neues Buch'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
