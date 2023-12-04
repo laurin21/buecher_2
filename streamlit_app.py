@@ -3,7 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
 # Display Title and Description
-st.title("Bücher Stats 2")
+st.title("Bücher Stats")
 
 
 # Establishing a Google Sheets connection
@@ -27,12 +27,6 @@ st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 
-
-st.markdown("")
-st.markdown("---")
-st.markdown("")
-         
-              
 st.markdown("##### Neuer Eintrag")
 datum = st.date_input(label="Datum")
 seite = st.number_input(label="Seite",
@@ -50,8 +44,28 @@ if st.button('Neuer Eintrag'):
         conn.update(worksheet="Updates", data=new_updates)
         updates = new_updates
 
+
+st.markdown("")
+st.markdown("---")
+st.markdown("")
+
+
 df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
-st.line_chart(data = df_days[["Datum", "Gelesen"]], x = "Datum", y = "Gelesen")
+df_days_buch = df_days.loc[df_days['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy()
+
+gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
+
+with gesamt_tab:
+    st.markdown("##### Gesamte Historie")
+    st.line_chart(data = df_days[["Datum", "Gelesen"]], 
+              x = "Datum", 
+              y = "Gelesen")
+with buch_tab:
+    st.markdown("##### Ausgewähltes Buch")
+    st.dataframe(data=buecher.reset_index(drop=True))
+st.markdown("")
+
+
 
 df_buch = updates.groupby('Buch_ID')['Gelesen'].sum().reset_index()
 buecher["Gelesen"] = df_buch["Gelesen"]
