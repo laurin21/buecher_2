@@ -72,3 +72,15 @@ with st.expander("Neuer Titel"):
         conn.update(worksheet="Bücher", data=new_buecher)
         buecher = new_buecher
         st.success("Buch wurde erfolgreich hinzugefügt")
+
+
+see_data = st.expander('Ganzer Datensatz')
+with see_data:
+    aus_tab, ein_tab = st.tabs(["Updates", "Bücher"])
+
+    with aus_tab:
+        st.markdown("##### Updates")
+        st.dataframe(data=updates.reset_index(drop=True))
+    with ein_tab:
+        st.markdown("##### Bücher")
+        st.dataframe(data=buecher.reset_index(drop=True))
