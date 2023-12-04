@@ -18,7 +18,7 @@ buecher = buecher.dropna(how="all")
 
 
 option = st.selectbox(
-     ('Upadtes', 'Bücher'),
+     options = ('Upadtes', 'Bücher'),
      placeholder = "Was soll angezeigt werden?")
 
 for i in option:
