@@ -80,6 +80,15 @@ neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%
 df_days_buch = pd.merge(neues_df, df_days_buch, on='Datum', how='left')
 df_days_buch['Gelesen'] = df_days_buch['Gelesen'].fillna(0)
 
+df_buch = updates.groupby('Buch_ID')['Gelesen'].sum().reset_index()
+buecher["Gelesen"] = df_buch["Gelesen"]
+
+buecher["Fortschritt"] = buecher["Start"] + buecher["Gelesen"]
+buecher["Übrig"] = buecher["Seiten"] - buecher["Gelesen"]
+buecher["Prozent"] = (buecher["Fortschritt"] / buecher["Seiten"]) * 100
+
+######
+
 gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
 
 with gesamt_tab:
@@ -92,19 +101,10 @@ with buch_tab:
     st.line_chart(data = df_days_buch[["Datum", "Gelesen"]], 
               x = "Datum", 
               y = "Gelesen")
+    st.metric(label = "Fortschritt", value = buecher.loc[buecher['Titel'] == buch_titel, 'Fortschritt'].values[0])
+    st.metric(label = "Prozent", value = buecher.loc[buecher['Titel'] == buch_titel, 'Prozent'].values[0])
+    st.metric(label = "Übrig", value = buecher.loc[buecher['Titel'] == buch_titel, 'Übrig'].values[0])
     
-
-
-st.markdown("")
-
-
-
-df_buch = updates.groupby('Buch_ID')['Gelesen'].sum().reset_index()
-buecher["Gelesen"] = df_buch["Gelesen"]
-
-buecher["Fortschritt"] = buecher["Start"] + buecher["Gelesen"]
-buecher["Übrig"] = buecher["Seiten"] - buecher["Gelesen"]
-buecher["Prozent"] = (buecher["Fortschritt"] / buecher["Seiten"]) * 100
 
 
 st.markdown("")
