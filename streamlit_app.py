@@ -62,7 +62,9 @@ with gesamt_tab:
               y = "Gelesen")
 with buch_tab:
     st.markdown("##### Ausgewähltes Buch")
-    st.dataframe(data=buecher.reset_index(drop=True))
+    st.line_chart(data = df_days_buch[["Datum", "Gelesen"]], 
+              x = "Datum", 
+              y = "Gelesen")
 st.markdown("")
 
 
