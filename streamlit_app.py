@@ -33,19 +33,19 @@ df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
 df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
 
 seiten_heute = df_days.loc[df_days['Datum'] == heute, 'Gelesen'].values[0]
-st.write(heute)
-st.write(seiten_heute)
 seiten_gestern = df_days.loc[df_days['Datum'] == heute - timedelta(days=1), 'Gelesen'].values[0]
-st.write(seiten_gestern)
-st.write(heute - timedelta(days=1))
 
 
 if seiten_heute > seiten_gestern:
      seiten_delta = seiten_gestern / seiten_heute
-else:
+if seiten_heute < seiten_gestern:
      seiten_delta = seiten_heute / seiten_gestern
+if seiten_heute == 0:
+     seiten_delta = -9.99
+if seiten_gestern == 0:
+     seiten_delta = +9.99
 
-st.metric(label = "Heute gelesen", value = f"{seiten_heute}", delta = seiten_delta)
+st.metric(label = "Heute gelesen", value = f"{seiten_heute}", delta = seiten_delta*100)
 
 st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
