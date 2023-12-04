@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from datetime import datetime, timedelta
 
 # Display Title and Description
 st.title("Bücher Stats")
@@ -17,11 +18,36 @@ updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%Y-%m-%d", errors = "coerce").dt.date 
 
+# Datenverarbeitung
+df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
+heute = pd.Timestamp.now().date()
+alle_tage = pd.date_range(start=min(df_days['Datum']), end=heute, freq='D')
+neues_df = pd.DataFrame({'Datum': alle_tage})
+neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
+df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
+df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
+
+df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
+heute = pd.Timestamp.now().date()
+alle_tage = pd.date_range(start=min(df_days_buch['Datum']), end=max(df_days_buch['Datum']), freq='D')
+neues_df = pd.DataFrame({'Datum': alle_tage})
+neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
+df_days_buch = pd.merge(neues_df, df_days_buch, on='Datum', how='left')
+df_days_buch['Gelesen'] = df_days_buch['Gelesen'].fillna(0)
 
 st.markdown("")
 st.markdown("---")
 st.markdown("")
 
+seiten_heute = df_days["Gelesen"][df_days["Datum"] == heute]
+seiten_gestern = df_days["Gelesen"][df_days["Datum"] == heute - timedelta(days=1)]
+
+if seiten_heute > seiten_gestern:
+     seiten_delta = seiten_gestern / seiten_heute
+else:
+     seiten_delta = seiten_heute / seiten_gestern
+
+st.metric(label = "Heute gelesen", value = f"{seiten_heute}", delta = seiten_delta)
 
 st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
@@ -49,23 +75,6 @@ st.markdown("")
 st.markdown("---")
 st.markdown("")
 
-
-df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
-heute = pd.Timestamp.now().date()
-alle_tage = pd.date_range(start=min(df_days['Datum']), end=heute, freq='D')
-neues_df = pd.DataFrame({'Datum': alle_tage})
-neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
-df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
-df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
-
-df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
-heute = pd.Timestamp.now().date()
-alle_tage = pd.date_range(start=min(df_days_buch['Datum']), end=max(df_days_buch['Datum']), freq='D')
-neues_df = pd.DataFrame({'Datum': alle_tage})
-neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
-df_days_buch = pd.merge(neues_df, df_days_buch, on='Datum', how='left')
-df_days_buch['Gelesen'] = df_days_buch['Gelesen'].fillna(0)
-
 gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
 
 with gesamt_tab:
@@ -74,10 +83,14 @@ with gesamt_tab:
               x = "Datum", 
               y = "Gelesen")
 with buch_tab:
+
     st.markdown("##### Ausgewähltes Buch")
     st.line_chart(data = df_days_buch[["Datum", "Gelesen"]], 
               x = "Datum", 
               y = "Gelesen")
+    
+
+
 st.markdown("")
 
 
