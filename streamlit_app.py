@@ -16,9 +16,10 @@ buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
+
 option = st.selectbox(
-    'Welche Tabellen sollen angezeigt werden?',
-    ['Upadtes', 'Bücher'])
+     ('Upadtes', 'Bücher'),
+     placeholder = "Was soll angezeigt werden?")
 
 for i in option:
     if i == "Updates":
