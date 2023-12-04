@@ -24,14 +24,12 @@ seite = st.number_input(label="Seiten")
 if st.button('Enter neues Buch'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
-    new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()+1],
-                            "Titel": [titel], 
-                            "Autor": [autor], 
-                            "Seiten": [seiten],
-                            "Fortschritt": [start]})
-    new_buecher = pd.concat([buecher, new_data], ignore_index=True)
-    conn.update(worksheet="Bücher", data=new_buecher)
-    buecher = new_buecher
+    new_data = pd.DataFrame({"Datum": [datum],
+                            "Titel": [buecher["Titel"].index(buch_titel)], 
+                            "Gelesen": [seite]})
+    new_updates = pd.concat([buecher, new_data], ignore_index=True)
+    conn.update(worksheet="Updates", data=new_updates)
+    updates = new_updates
     st.success("Buch wurde erfolgreich hinzugefügt")
 
 with st.expander("Neuer Titel"):
