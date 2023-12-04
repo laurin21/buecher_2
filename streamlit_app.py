@@ -26,7 +26,7 @@ seiten = st.number_input(label="Seiten")
 if st.button('Enter neues Buch'):
     if not titel or not autor or not seiten:
                 st.warning("Ensure all mandatory fields are filled.")
-    new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()],
+    new_data = pd.DataFrame({"Buch_ID": [buecher["Buch_ID"].max()+1],
                             "Titel": [titel], 
                              "Autor": [autor], 
                              "Seiten": [seiten],
