@@ -21,7 +21,7 @@ buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 datum = st.date_input(label="Datum")
 seite = st.number_input(label="Seite",
-                        value = int)
+                        format = "%d")
 if st.button('Neuer Eintrag'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
@@ -36,10 +36,8 @@ if st.button('Neuer Eintrag'):
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
     autor = st.text_input(label="Autor")
-    seiten = st.number_input(label="Seiten",
-                             value = int)
-    start = st.number_input(label="Start bei",
-                            value = int)
+    seiten = st.number_input(label="Seiten")
+    start = st.number_input(label="Start bei")
 
     if st.button('Enter neues Buch'):
         if not titel or not autor or not seiten:
