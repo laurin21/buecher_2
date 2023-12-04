@@ -18,9 +18,8 @@ buecher = buecher.dropna(how="all")
 
 
 option = st.selectbox(
-     label = "TEst",
-     options = ('Upadtes', 'Bücher'),
-     placeholder = "Was soll angezeigt werden?")
+     label = "Was soll angezeigt werden?",
+     options = ('Updates', 'Bücher'))
 
 for i in option:
     if i == "Updates":
