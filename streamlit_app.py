@@ -33,10 +33,7 @@ if st.button('Enter neues Buch'):
                              "Fortschritt": [0]})
     new_buecher = pd.concat([buecher, new_data], ignore_index=True)
     conn.update(worksheet="Bücher", data=new_buecher)
-    updates = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
-    buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5))) # Bücher
-    updates = updates.dropna(how="all")
-    buecher = buecher.dropna(how="all")
+    buecher = new_buecher
     st.success("Buch wurde erfolgreich hinzugefügt")
 
 option = st.multiselect(
