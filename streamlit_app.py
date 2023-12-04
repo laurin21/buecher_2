@@ -42,7 +42,7 @@ if st.button('Neuer Eintrag'):
             conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
 
-st.line_chart(data = updates["Datum", "Gelesen"], x = "Datum", y = "Gelesen")
+st.line_chart(data = updates[["Datum", "Gelesen"]], x = "Datum", y = "Gelesen")
 
 
 st.markdown("")
