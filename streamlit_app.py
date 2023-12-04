@@ -16,9 +16,6 @@ buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
-updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%d.%m.%Y", errors = "coerce").dt.date 
-
-
 st.markdown("#### Neuer Eintrag")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
@@ -44,10 +41,8 @@ if st.button('Neuer Eintrag'):
             new_updates = pd.concat([updates, new_data], ignore_index=True)
             conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
-            updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%d.%m.%Y", errors = "coerce").dt.date 
-            st.success("Buch wurde erfolgreich hinzugefügt")
 
-st.line_chart(data = updates, x = "Datum", y = "Gelesen")
+st.line_chart(data = updates["Datum", "Gelesen"], x = "Datum", y = "Gelesen")
 
 
 st.markdown("")
@@ -73,6 +68,9 @@ with st.expander("Neuer Titel"):
         buecher = new_buecher
         st.success("Buch wurde erfolgreich hinzugefügt")
 
+st.markdown("")
+st.markdown("---")
+st.markdown("")
 
 see_data = st.expander('Ganzer Datensatz')
 with see_data:
