@@ -51,6 +51,8 @@ st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 
+st.markdown("")
+
 with st.expander("Neuer Eintrag"):
     st.markdown("##### Neuer Eintrag")
     datum = st.date_input(label="Datum")
