@@ -12,7 +12,7 @@ url = "https://docs.google.com/spreadsheets/d/1UqgZb1MJCsfr9300dnphCGBvPlWxxMyNN
 
 # Fetch existing vendors data
 updates = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
-buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5))) # Bücher
+buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(6))) # Bücher
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%Y-%m-%d", errors = "coerce").dt.date 
@@ -37,7 +37,16 @@ if st.button('Neuer Eintrag'):
         conn.update(worksheet="Updates", data=new_updates)
         updates = new_updates
 
-st.line_chart(data = updates[["Datum", "Gelesen"]], x = "Datum", y = "Gelesen")
+df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
+st.line_chart(data = df_days[["Datum", "Gelesen"]], x = "Datum", y = "Gelesen")
+
+df_buch = updates.groupby('Buch_ID')['Gelesen'].sum().reset_index()
+buecher["Gelesen"] = df_buch["Gelesen"]
+
+buecher["Fortschritt"] = buecher["Start"] + buecher["Gelesen"]
+buecher["Übrig"] = buecher["Seiten"] - buecher["Gelesen"]
+buecher["Prozent"] = buecher["Gelesen"] / buecher["Seiten"]
+
 
 
 st.markdown("")
