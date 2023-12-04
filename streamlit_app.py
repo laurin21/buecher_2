@@ -98,8 +98,12 @@ st.markdown("")
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
     autor = st.text_input(label="Autor")
-    seiten = st.number_input(label="Seiten")
-    start = st.number_input(label="Start bei")
+    seiten = st.number_input(label="Seiten",
+                        format = "%d",
+                        value = 0)
+    start = st.number_input(label="Start bei",
+                        format = "%d",
+                        value = 0)
 
     if st.button('Enter neues Buch'):
         if not titel or not autor or not seiten:
