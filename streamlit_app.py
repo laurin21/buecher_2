@@ -33,6 +33,7 @@ df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
 df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
 
 seiten_heute = df_days.loc[df_days['Datum'] == heute, 'Gelesen'].values[0]
+st.write(seiten_heute)
 seiten_gestern = df_days.loc[df_days['Datum'] == heute - timedelta(days=1), 'Gelesen'].values[0]
 
 if seiten_heute > seiten_gestern:
