@@ -21,7 +21,7 @@ buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 datum = st.text_input(label="Datum")
 seite = st.number_input(label="Seite")
-if st.button('Enter neues Buch'):
+if st.button('Neuer Eintrag'):
     if not buch_titel or not datum or not seite:
         st.warning("Ensure all mandatory fields are filled.")
     new_data = pd.DataFrame({"Datum": [datum],
