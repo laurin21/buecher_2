@@ -59,6 +59,12 @@ df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
 df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
 
 df_days_buch = updates.loc[updates['Buch_ID'] == buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1].copy().groupby('Datum')['Gelesen'].sum().reset_index()
+heute = pd.Timestamp.now().date()
+alle_tage = pd.date_range(start=min(df_days_buch['Datum']), end=max(df_days_buch['Datum']), freq='D')
+neues_df = pd.DataFrame({'Datum': alle_tage})
+neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%s", errors = "coerce").dt.date 
+df_days_buch = pd.merge(neues_df, df_days_buch, on='Datum', how='left')
+df_days_buch['Gelesen'] = df_days_buch['Gelesen'].fillna(0)
 
 gesamt_tab, buch_tab = st.tabs(["Gesamte Histore", "Ausgewählter Titel"])
 
