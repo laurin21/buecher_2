@@ -23,6 +23,8 @@ st.markdown("")
 st.markdown("---")
 st.markdown("")
 
+heute = pd.Timestamp.now().date()
+
 df_days = updates.groupby('Datum')['Gelesen'].sum().reset_index()
 alle_tage = pd.date_range(start=min(df_days['Datum']), end=heute, freq='D')
 neues_df = pd.DataFrame({'Datum': alle_tage})
@@ -30,7 +32,6 @@ neues_df["Datum"] = pd.to_datetime(neues_df["Datum"], format = "%Y-%m-%d %h:%h:%
 df_days = pd.merge(neues_df, df_days, on='Datum', how='left')
 df_days['Gelesen'] = df_days['Gelesen'].fillna(0)
 
-heute = pd.Timestamp.now().date()
 seiten_heute = df_days["Gelesen"][df_days["Datum"] == heute]
 seiten_gestern = df_days["Gelesen"][df_days["Datum"] == heute - timedelta(days=1)]
 
