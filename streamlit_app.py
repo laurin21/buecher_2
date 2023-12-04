@@ -16,6 +16,19 @@ buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(5
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 
+option = st.selectbox(
+    'Welche Tabellen sollen angezeigt werden?',
+    ['Upadtes', 'Bücher'])
+
+for i in option:
+    if i == "Updates":
+        st.markdown("##### Updates")
+        st.dataframe(updates)
+
+    if i == "Bücher":
+        st.markdown("##### Bücher")
+        st.dataframe(buecher)
+
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
     autor = st.text_input(label="Autor")
@@ -34,16 +47,3 @@ with st.expander("Neuer Titel"):
         conn.update(worksheet="Bücher", data=new_buecher)
         buecher = new_buecher
         st.success("Buch wurde erfolgreich hinzugefügt")
-
-option = st.multiselect(
-    'Welche Tabellen sollen angezeigt werden?',
-    ['Upadtes', 'Bücher'])
-
-for i in option:
-    if i == "Updates":
-        st.markdown("##### Updates")
-        st.dataframe(updates)
-
-    if i == "Bücher":
-        st.markdown("##### Bücher")
-        st.dataframe(buecher)
