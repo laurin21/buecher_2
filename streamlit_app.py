@@ -17,10 +17,23 @@ updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%Y-%m-%d", errors = "coerce").dt.date 
 
-              
-st.markdown("#### Neuer Eintrag")
+
+st.markdown("")
+st.markdown("---")
+st.markdown("")
+
+
+st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
+
+
+st.markdown("")
+st.markdown("---")
+st.markdown("")
+         
+              
+st.markdown("##### Neuer Eintrag")
 datum = st.date_input(label="Datum")
 seite = st.number_input(label="Seite",
                         format = "%d",
@@ -48,10 +61,10 @@ buecher["Übrig"] = buecher["Seiten"] - buecher["Gelesen"]
 buecher["Prozent"] = (buecher["Fortschritt"] / buecher["Seiten"]) * 100
 
 
-
 st.markdown("")
 st.markdown("---")
 st.markdown("")
+
 
 with st.expander("Neuer Titel"):
     titel = st.text_input(label="Buchtitel")
@@ -72,9 +85,11 @@ with st.expander("Neuer Titel"):
         buecher = new_buecher
         st.success("Buch wurde erfolgreich hinzugefügt")
 
+
 st.markdown("")
 st.markdown("---")
 st.markdown("")
+
 
 see_data = st.expander('Ganzer Datensatz')
 with see_data:
