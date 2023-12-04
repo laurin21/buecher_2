@@ -51,22 +51,23 @@ st.markdown("#### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buch",
                      options=buecher["Titel"])
 
-st.markdown("##### Neuer Eintrag")
-datum = st.date_input(label="Datum")
-seite = st.number_input(label="Seite",
-                        format = "%d",
-                        value = 0)
-if st.button('Neuer Eintrag'):
-    if not buch_titel or not datum or not seite:
-        st.warning("Ensure all mandatory fields are filled.")
+with st.expander("Neuer Eintrag"):
+    st.markdown("##### Neuer Eintrag")
+    datum = st.date_input(label="Datum")
+    seite = st.number_input(label="Seite",
+                            format = "%d",
+                            value = 0)
+    if st.button('Enter'):
+        if not buch_titel or not datum or not seite:
+            st.warning("Ensure all mandatory fields are filled.")
 
-    else:
-        new_data = pd.DataFrame({"Datum": [datum],
-                                 "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
-                                 "Gelesen": [seite]})
-        new_updates = pd.concat([updates, new_data], ignore_index=True)
-        conn.update(worksheet="Updates", data=new_updates)
-        updates = new_updates
+        else:
+            new_data = pd.DataFrame({"Datum": [datum],
+                                    "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
+                                    "Gelesen": [seite]})
+            new_updates = pd.concat([updates, new_data], ignore_index=True)
+            conn.update(worksheet="Updates", data=new_updates)
+            updates = new_updates
 
 
 st.markdown("")
