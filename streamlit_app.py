@@ -73,8 +73,7 @@ with st.expander("Neuer Eintrag"):
             new_data = pd.DataFrame({"Datum": [datum],
                                     "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
                                     "Gelesen": [seite]})
-            new_updates = pd.concat([updates, new_data], ignore_index=True)
-            updates = new_updates
+            updates = pd.concat([updates, new_data], ignore_index=True)
             df_days.loc[df_days['Datum'] == heute, 'Gelesen'] += seite
             conn.update(worksheet="Updates", data=updates)
             conn.update(worksheet="Bücher", data=buecher)
