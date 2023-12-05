@@ -171,3 +171,4 @@ st.markdown("")
 
 if st.button("Sync Data"):
      conn.update(worksheet="Updates", data=updates)
+     conn.update(worksheet="Bücher", data=buecher)
