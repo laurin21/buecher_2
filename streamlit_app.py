@@ -76,6 +76,7 @@ with st.expander("Neuer Eintrag"):
             new_updates = pd.concat([updates, new_data], ignore_index=True)
             conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
+            df_days[df_days["Datum"] == heute, ["Gelesen"]] += seite
             st.success("Neuer Eintrag erfolgreich hinzugefügt.")
 
 
