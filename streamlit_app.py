@@ -169,7 +169,7 @@ st.markdown("")
 st.markdown("---")
 st.markdown("")
 
-col1_1, col2_1, col3 = st.columns(2)
+col1_1, col2_1 = st.columns(2)
 
 if col1_1.button("Pull Data"):
      conn.read(worksheet="Updates", data=updates)
