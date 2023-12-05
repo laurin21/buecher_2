@@ -13,7 +13,7 @@ url = "https://docs.google.com/spreadsheets/d/1UqgZb1MJCsfr9300dnphCGBvPlWxxMyNN
 
 # Fetch existing vendors data
 updates = conn.read(spreadsheet = url, worksheet="Updates", usecols=list(range(3))) # Updates
-buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(9))) # Bücher
+buecher = conn.read(spreadsheet = url, worksheet="Bücher", usecols=list(range(8))) # Bücher
 updates = updates.dropna(how="all")
 buecher = buecher.dropna(how="all")
 updates["Datum"] = pd.to_datetime(updates["Datum"], format = "%Y-%m-%d", errors = "coerce").dt.date 
