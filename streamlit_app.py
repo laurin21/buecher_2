@@ -165,6 +165,9 @@ with see_data:
         st.markdown("##### Bücher")
         st.dataframe(data=df_days.reset_index(drop=True))
 
+st.markdown("")
+st.markdown("---")
+st.markdown("")
 
 if st.button("Sync Data"):
      conn.update(worksheet="Updates", data=updates)
