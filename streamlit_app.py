@@ -143,8 +143,7 @@ with st.expander("Neuer Titel"):
                                  "Autor": [autor], 
                                  "Seiten": [seiten],
                                  "Fortschritt": [start]})
-        new_buecher = pd.concat([buecher, new_data], ignore_index=True)
-        buecher = new_buecher
+        buecher = pd.concat([buecher, new_data], ignore_index=True)
         conn.update(worksheet="Updates", data=updates)
         conn.update(worksheet="Bücher", data=buecher)
         st.success("Neues Buch erfolgreich hinzugefügt.")
