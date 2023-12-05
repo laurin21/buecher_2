@@ -164,3 +164,7 @@ with see_data:
     with tage_tab:
         st.markdown("##### Bücher")
         st.dataframe(data=df_days.reset_index(drop=True))
+
+
+if st.button("Sync Data"):
+     conn.update(worksheet="Updates", data=updates)
