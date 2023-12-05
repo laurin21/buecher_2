@@ -48,7 +48,9 @@ st.metric(label = "Heute gelesen", value = f"{int(seiten_heute)}", delta = f"{in
 st.markdown("---")
 
 last_book = int(updates["Buch_ID"].iloc[-1]-1)
-last_page = str(buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'])
+last_page = buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'].values[0]
+
+#last_page = str(buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'])
 st.write(last_page)
 st.markdown("##### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buchtitel",
