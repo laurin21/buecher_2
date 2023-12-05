@@ -76,6 +76,7 @@ with st.expander("Neuer Eintrag"):
             new_updates = pd.concat([updates, new_data], ignore_index=True)
             conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
+            st.success("Neuer Eintrag erfolgreich hinzugefügt.")
 
 
 st.markdown("")
@@ -143,7 +144,7 @@ with st.expander("Neuer Titel"):
         new_buecher = pd.concat([buecher, new_data], ignore_index=True)
         conn.update(worksheet="Bücher", data=new_buecher)
         buecher = new_buecher
-        st.success("Buch wurde erfolgreich hinzugefügt")
+        st.success("Neues Buch erfolgreich hinzugefügt.")
 
 
 st.markdown("")
@@ -169,12 +170,23 @@ st.markdown("")
 st.markdown("---")
 st.markdown("")
 
-col1_1, col2_1 = st.columns(2)
+col1_1, col2_1, col3_1 = st.columns(2)
 
 if col1_1.button("Pull Data"):
-     conn.read(worksheet="Updates", data=updates)
-     conn.read(worksheet="Bücher", data=buecher)
+    conn.read(worksheet="Updates", data=updates)
+    conn.read(worksheet="Bücher", data=buecher)
+    st.success("Pull von Daten erfolgreich.")
 
 if col2_1.button("Push Data"):
-     conn.update(worksheet="Updates", data=updates)
-     conn.update(worksheet="Bücher", data=buecher)
+    conn.update(worksheet="Updates", data=updates)
+    conn.update(worksheet="Bücher", data=buecher)
+    st.success("Push von Daten erfolgreich.")
+
+if col3_1.button("Push und Pull"):
+    conn.update(worksheet="Updates", data=updates)
+    conn.update(worksheet="Bücher", data=buecher)
+
+    conn.read(worksheet="Updates", data=updates)
+    conn.read(worksheet="Bücher", data=buecher)
+
+    st.success("Push und Pull von Daten erfolgreich.")
