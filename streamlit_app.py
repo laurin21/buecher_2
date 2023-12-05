@@ -49,7 +49,7 @@ st.markdown("---")
 
 last_book = int(updates["Buch_ID"].iloc[-1]-1)
 st.table(buecher)
-last_page = str(buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'].values[0])
+last_page = str(buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'].values[1])
 st.write(last_page)
 st.markdown("##### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buchtitel",
