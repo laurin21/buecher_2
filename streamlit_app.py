@@ -169,10 +169,12 @@ st.markdown("")
 st.markdown("---")
 st.markdown("")
 
-if st.button("Pull Data"):
+col1_1, col2_1, col3 = st.columns(2)
+
+if col1_1.button("Pull Data"):
      conn.read(worksheet="Updates", data=updates)
      conn.read(worksheet="Bücher", data=buecher)
 
-if st.button("Push Data"):
+if col2_1.button("Push Data"):
      conn.update(worksheet="Updates", data=updates)
      conn.update(worksheet="Bücher", data=buecher)
