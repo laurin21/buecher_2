@@ -74,9 +74,10 @@ with st.expander("Neuer Eintrag"):
                                     "Buch_ID": [buecher["Titel"][buecher["Titel"] == buch_titel].index[0]+1], 
                                     "Gelesen": [seite]})
             new_updates = pd.concat([updates, new_data], ignore_index=True)
-            conn.update(worksheet="Updates", data=new_updates)
             updates = new_updates
             df_days.loc[df_days['Datum'] == heute, 'Gelesen'] += seite
+            conn.update(worksheet="Updates", data=updates)
+            conn.update(worksheet="Bücher", data=buecher)
             st.success("Neuer Eintrag erfolgreich hinzugefügt.")
 
 
@@ -143,8 +144,9 @@ with st.expander("Neuer Titel"):
                                  "Seiten": [seiten],
                                  "Fortschritt": [start]})
         new_buecher = pd.concat([buecher, new_data], ignore_index=True)
-        conn.update(worksheet="Bücher", data=new_buecher)
         buecher = new_buecher
+        conn.update(worksheet="Updates", data=updates)
+        conn.update(worksheet="Bücher", data=buecher)
         st.success("Neues Buch erfolgreich hinzugefügt.")
 
 
