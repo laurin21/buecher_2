@@ -47,7 +47,8 @@ st.metric(label = "Heute gelesen", value = f"{int(seiten_heute)}", delta = f"{in
 
 st.markdown("---")
 
-last_book = letzter_wert = int(updates["Buch_ID"].iloc[-1]-1)
+last_book = int(updates["Buch_ID"].iloc[-1]-1)
+last_page = str(buecher.loc[buecher['Titel'] == last_book, 'Fortschritt'].values[0])
 st.markdown("##### Aktuelles Buch")
 buch_titel = st.selectbox(label="Buchtitel",
                      options=buecher["Titel"],
@@ -59,9 +60,10 @@ st.markdown("")
 with st.expander("Neuer Eintrag"):
     st.markdown("##### Neuer Eintrag")
     datum = st.date_input(label="Datum")
-    seite = st.number_input(label="Seite",
+    seiten_input = st.number_input(label="Seite",
                             format = "%d",
-                            value = 0)
+                            value = last_page)
+    seite = seiten_input - last_page
     if st.button('Enter'):
         if not buch_titel or not datum or not seite:
             st.warning("Ensure all mandatory fields are filled.")
